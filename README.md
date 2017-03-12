@@ -2,13 +2,14 @@
 
 ## roll and payout
 
-These are simple command line utilitied written in
-perl to do payout lookups and roll destinations in a game of <A
+These are simple command line utilities written in perl to do payout
+lookups and roll destinations in a game of <A
 HREF="https://en.wikipedia.org/wiki/Rail_Baron">Rail Baron</A>.
 
 They are nice to play the game without using the awkward paper lookup tables.
 
-payout needs the "Payout.csv" file that is here.
+payout needs the "Payout.csv" file that is here, as well as the Text::CSV
+perl module that if you don't have it you can install from CPAN.
 
 ## Example
 

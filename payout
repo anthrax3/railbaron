@@ -59,8 +59,35 @@ my @cols = @{$csv->getline ($infile)};
 my $row = {};
 $csv->bind_columns (\@{$row}{@cols});
 
+foreach my $city (@cols) {
+    next if $city eq "City";
+    $startcity = &citymatch($startcity, $city);
+    $endcity = &citymatch($endcity, $city);
+}
+
 while ($csv->getline ($infile)) {
     if (($row->{"City"}) eq $startcity) {
 	print "Payout for ", $row->{"City"}, " to $endcity is ", $row->{"$endcity"}, "\n";
     }
+}
+
+sub citymatch() {
+    my $userinput = $_[0];
+    my $candidate = $_[1];
+    if (lc $userinput eq lc $candidate) {
+	return $candidate;
+    }
+    my $nospace = $candidate;
+    $nospace =~ s/ //g;
+    if (lc $userinput eq lc $nospace) {
+	return $candidate;
+    }
+    if (lc $userinput eq substr(lc $candidate, 0, length($userinput))) {
+	return $candidate;
+    }
+    if (lc $userinput eq substr(lc $nospace, 0, length($userinput))) {
+	return $candidate;
+    }
+    # no match, keep it the same;
+    return $userinput
 }

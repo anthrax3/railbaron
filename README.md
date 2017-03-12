@@ -10,4 +10,31 @@ They are nice to play the game without using the awkward paper lookup tables.
 
 payout needs the "Payout.csv" file that is here.
 
+## Example
 
+Alice is playing and arrives in Tucumcari, having started in New York, and
+needs to get paid, so she runs "payout"
+
+```
+$ ./payout "New York" "Tucumcari"
+Payout for New York to Tucumcari is 20.0
+```
+And Alice receives $20,000 for her trip.
+
+Later needing to go to a new destination she runs "roll":
+
+```
+$ ./roll
+Region: SouthWest City: Las Vegas
+```
+
+Since Alice is in the SouthWest region (In Tucumcari), she is now permitted to
+choose the region in which her destinaiton will be. Since her evil opponent Bob
+has bought up the NorthEast railroads, she chooses SouthEast:
+
+```
+$ ./roll SouthEast
+Region: SouthEast City: Miami
+```
+
+Now Alice is going to Miami.

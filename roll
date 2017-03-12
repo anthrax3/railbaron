@@ -1,0 +1,166 @@
+#!/usr/bin/perl
+
+=head1 NAME
+
+roll - Roll a destinaiton for a game of Rail Baron
+
+=head1 SYNOPSIS
+	
+	roll [Region]
+
+=head1 DESCRIPTION
+
+"roll" rolls a new city for a player of the game Rail Baron. When
+invoked without an argument it chooses both the region and the
+city. It may be optionally invoked with a region name which is one of
+"Plains", "SouthWest", "SouthEast", "SouthCentral", "NorthCentral",
+"NorthEast", or "NorthWest" to choose only the city within a chosen
+region. The latter invocation is normal in the game when a player
+rolls the same region they are in, and therefore gets to choose a
+region to go to next.
+
+=head1 EXAMPLES
+
+	roll
+	roll SouthWest
+
+=head1 AUTHOR
+
+Bob Beck <beck@obtuse.com>
+
+=head1 SEE ALSO
+
+payout
+
+=cut
+
+use strict;
+
+# Data - Basically from the Game table of roll, odd and even;
+# could be simplified but left this way to easily verify against printed rules
+
+my %Rolls =  (
+    Regions => [
+	"2,Plains,SouthWest",
+	"3,SouthEast,SouthCentral",
+	"4,SouthEast,SouthCentral",
+	"5,SouthEast,SouthCentral",
+	"6,NorthCentral,SouthWest",
+	"7,NorthCentral,SouthWest",
+	"8,NorthEast,Plains",
+	"9,NorthEast,NorthWest",
+	"10,NorthEast,NorthWest",
+	"11,NorthEast,Plains",
+	"12,NorthEast,NorthWest"],
+    NorthEast => [
+	"2,New York,New York",
+	"3,New York,Washington",
+	"4,New York,Pittsburgh",
+	"5,Albany,Pittsburgh",
+	"6,Boston,Philadelphia",
+	"7,Buffalo,Washington",
+	"8,Boston,Philadelphia",
+	"9,Portland ME,Baltimore",
+	"10,New York,Baltimore",
+	"11,New York,Baltimore",
+	"12,New York,New York"],
+    SouthEast => [
+	"2,Charlotte,Norfolk",
+	"3,Charlotte,Norfolk",
+	"4,Chattanooga,Norfolk",
+	"5,Atlanta,Charleston",
+	"6,Atlanta,Miami",
+	"7,Atlanta,Jacksonville",
+	"8,Richmond,Miami",
+	"9,Knoxville,Tampa",
+	"10,Mobile,Tampa",
+	"11,Knoxville,Mobile",
+	"12,Mobile,Norfolk"],
+    NorthCentral => [
+	"2,Cleveland,Cincinnati".
+	"3,Cleveland,Chicago",
+	"4,Cleveland,Cincinnati",
+	"5,Cleveland,Cincinnati",
+	"6,Detroit,Columbus",
+	"7,Detroit,Chicago",
+	"8,Indianapolis,Chicago",
+	"9,Milwaukee,St Louis",
+	"10,Milwaukee,St Louis",
+	"11,Chicago,St Louis",
+	"12,Milwaukee,Chicago"],
+    SouthCentral => [
+	"2,Memphis,Shreveport",
+	"3,Memphis,Shreveport",
+	"4,Memphis,Dallas",
+	"5,Little Rock,New Orleans",
+	"6,New Orleans,Dallas",
+	"7,Birmingham,San Antonio",
+	"8,Louisville,Houston",
+	"9,Nashville,Houston",
+	"10,Nashville,Ft Worth",
+	"11,Louisville,Ft Worth",
+	"12,Memphis,Ft Worth"],
+    Plains => [
+	"2,Kansas City,Oklahoma City",
+	"3,Kansas City,St Paul",
+	"4,Denver,Minneapolis",
+	"5,Denver,St Paul",
+	"6,Denver,Minneapolis",
+	"7,Kansas City,Oklahoma City",
+	"8,Kansas City,Des Moines",
+	"9,Kansas City,Omaha",
+	"10,Pueblo,Omaha",
+	"11,Pueblo,Fargo",
+	"12,Oklahoma City,Fargo"],
+    NorthWest => [
+	"2,Spokane,Spokane",
+	"3,Spokane,Salt Lake",
+	"4,Seattle,Salt Lake City",
+	"5,Seattle,Salt Lake City",
+	"6,Seattle,Portland OR",
+	"7,Seattle,Portland OR",
+	"8,Rapid City,Portland OR",
+	"9,Casper,Pocatello",
+	"10,Billings,Butte",
+	"11,Billings,Butte",
+	"12,Spokane,Portland OR"],
+    SouthWest => [
+	"2,San Diego,Los Angeles",
+	"3,San Diego,Oakland",
+	"4,Reno,Oakland",
+	"5,San Diego,Oakland",
+	"6,Sacramento,Los Angeles",
+	"7,Las Vegas,Los Angeles",
+	"8,Phoenix,Los Angeles",
+	"9,El Paso,San Francisco",
+	"10,Tucumcari,San Francisco",
+	"11,Phoenix,San Francisco",
+	"12,Phoenix,San Francisco"],
+);
+
+sub roll {
+    my @lookuparr = @{$_[0]};
+    my $even = int rand(2);
+    my $roll = int rand(6) + int rand(6);
+    my $data = $lookuparr[($roll)];
+    my @vals = split(/,/, $data);
+
+    if ($even) {
+	return($vals[2]);
+    }
+    else {
+	return($vals[1]);
+    }
+}
+
+my $region = shift;
+
+if (!$region) {
+    $region = &roll(\@{$Rolls{"Regions"}});
+}
+
+my $city = &roll(\@{$Rolls{$region}});
+
+print "Region: $region City: $city\n";
+
+

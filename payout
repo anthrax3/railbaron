@@ -1,0 +1,52 @@
+#!/usr/bin/perl
+=head1 NAME
+
+payout - Compute the payout for travel between two cities in a game of Rail Baron
+
+=head1 SYNOPSIS
+	
+	payout startcity endcity
+
+=head1 DESCRIPTION
+
+"payout" computes the payout for travel between two cities in a game of
+Rail Baron. The payout is in thousands of dollars. City names are
+capitalized. "Portland OR" and "Portland ME" are the two different
+Portlands.
+
+=head1 EXAMPLES
+
+	payout "San Francisco" "Portland ME"
+	payout "New York" "Portland OR"
+
+
+=head1 AUTHOR
+
+Bob Beck <beck@obtuse.com>
+
+=head1 SEE ALSO
+
+	 roll
+
+=cut
+
+use strict;
+use Text::CSV;
+
+
+my $paydata = "./Payout.csv";
+my $startcity=shift;
+my $endcity=shift;
+
+my $csv=Text::CSV->new();
+open my $infile ,$paydata or die "Can't open file $paydata";
+
+my @cols = @{$csv->getline ($infile)};
+my $row = {};
+$csv->bind_columns (\@{$row}{@cols});
+
+while ($csv->getline ($infile)) {
+    if (($row->{"City"}) eq $startcity) {
+	print "Payout for ", $row->{"City"}, " to $endcity is ", $row->{"$endcity"}, "\n";
+    }
+}

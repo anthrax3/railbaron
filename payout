@@ -57,10 +57,10 @@ my $paydata = "./Payout.csv";
 my $startcity=shift;
 my $endcity=shift;
 
-($startcity && $endcity) || die "usage: payout startcity endcity";
+($startcity && $endcity) || die "usage: payout startcity endcity\n";
 
 my $csv=Text::CSV->new();
-open my $infile ,$paydata or die "Can't open file $paydata";
+open my $infile ,$paydata or die "Can't open file $paydata\n";
 
 my @cols = @{$csv->getline ($infile)};
 my $row = {};
@@ -78,7 +78,7 @@ while ($csv->getline ($infile)) {
 	exit (0);
     }
 }
-die "Unable to find a payout for $startcity to $endcity";
+die "Unable to find a payout for $startcity to $endcity\n";
 
 sub citymatch() {
     my $userinput = $_[0];

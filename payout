@@ -57,6 +57,8 @@ my $paydata = "./Payout.csv";
 my $startcity=shift;
 my $endcity=shift;
 
+($startcity && $endcity) || die "usage: payout startcity endcity";
+
 my $csv=Text::CSV->new();
 open my $infile ,$paydata or die "Can't open file $paydata";
 

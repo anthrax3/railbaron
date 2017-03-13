@@ -210,8 +210,15 @@ if (!$region) {
     }
 }
 
-my $city = &roll(\@{$Rolls{$region}});
+my $city="";
 
-print "Region: $region, City: $city\n";
+if ($Rolls{$region}) {
+    $city = &roll(\@{$Rolls{$region}});
+    print "Region: $region, City: $city\n";
+    exit(0);
+}
+die("Unable to find a region $region\n");
+
+
 
 

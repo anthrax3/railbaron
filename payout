@@ -73,10 +73,12 @@ foreach my $city (@cols) {
 }
 
 while ($csv->getline ($infile)) {
-    if (($row->{"City"}) eq $startcity) {
+    if ((($row->{"City"}) eq $startcity) && $row->{"$endcity"}) {
 	print "Payout for ", $row->{"City"}, " to $endcity is ", $row->{"$endcity"}, "\n";
+	exit (0);
     }
 }
+die "Unable to find a payout for $startcity to $endcity";
 
 sub citymatch() {
     my $userinput = $_[0];

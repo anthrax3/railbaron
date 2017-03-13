@@ -32,10 +32,15 @@ region. The latter invocation is normal in the game when a player
 rolls the same region they are in, and therefore gets to choose a
 region to go to next.
 
+Region names can be fully specified as one word, or as two letter
+abbreviations "ne", "nc", "nw", "se", "sc", "sw", "pl".
+
 =head1 EXAMPLES
 
 	roll
 	roll SouthWest
+	roll sw
+
 
 =head1 AUTHOR
 
@@ -170,10 +175,43 @@ my $region = shift;
 
 if (!$region) {
     $region = &roll(\@{$Rolls{"Regions"}});
+} else {
+    if (lc $region eq "ne") {
+	$region = "NorthEast";
+    }
+    elsif (lc $region eq "nc") {
+	$region = "NorthCentral";
+    }
+    elsif (lc $region eq "nw") {
+	$region = "NorthWest";
+    }
+    elsif (lc $region eq "se") {
+	$region = "SouthEast";
+    }
+    elsif (lc $region eq "sc") {
+	$region = "SouthCentral";
+    }
+    elsif (lc $region eq "sw") {
+	$region = "SouthWest";
+    }
+    elsif (lc $region eq "pl") {
+	$region = "Plains";
+    }
+    elsif (lc $region eq "p") {
+	$region = "Plains";
+    }
+    else {
+	foreach my $reg (keys %Rolls) {
+	    if (lc $reg eq lc $region) {
+		$region = $reg;
+		last;
+	    }
+	}
+    }
 }
 
 my $city = &roll(\@{$Rolls{$region}});
 
-print "Region: $region City: $city\n";
+print "Region: $region, City: $city\n";
 
 

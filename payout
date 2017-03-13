@@ -24,13 +24,14 @@ payout - Compute the payout for travel between two cities in a game of Rail Baro
 =head1 DESCRIPTION
 
 "payout" computes the payout for travel between two cities in a game
-of Rail Baron. The payout is in thousands of dollars. City names are
-capitalized. "Portland OR" and "Portland ME" are the two different
-Portlands.
+of Rail Baron. The payout is in thousands of dollars. 
 
 City names may be specified case insensitively or without
 spaces. Incomplete names will attempt to match a city based on the
 portion specified.
+
+"Portland OR" and "Portland ME" are used to disambiguate the two
+different Portlands.
 
 =head1 EXAMPLES
 

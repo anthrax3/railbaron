@@ -28,11 +28,15 @@ of Rail Baron. The payout is in thousands of dollars. City names are
 capitalized. "Portland OR" and "Portland ME" are the two different
 Portlands.
 
+City names may be specified case insensitively or without
+spaces. Incomplete names will attempt to match a city based on the
+portion specified.
+
 =head1 EXAMPLES
 
 	payout "San Francisco" "Portland ME"
 	payout "New York" "Portland OR"
-
+        payout "newy" "portlando"
 
 =head1 AUTHOR
 
